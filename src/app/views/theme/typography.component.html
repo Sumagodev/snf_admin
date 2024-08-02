@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row justify-content-end">
+    <div class="col-auto">
+      <!-- <mat-form-field appearance="outline">
+        <input class="p-1" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+      </mat-form-field> -->
+      <div class="input-group custom-search-bar">
+        <input type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+    </div>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Displaying items -->
+  <div class="container" *ngIf="!showAddForm && !selectedItem.id">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Sr. No</th>
+          <th>Our Supporter Title</th>
+          <th>Image</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+          <td>{{ i + 1 + pageIndex * pageSize }}</td>
+
+          <td>{{ item.name }}</td>
+          <td>
+            <img [src]="item.imageUrl" alt="image" class="img-fluid" style="max-height: 150px; max-width: 200px;" />
+          </td>
+          <td>
+            <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button> &nbsp;
+            <button class="btn btn-danger" (click)="deleteSupporter(item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize"  (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+
+  <!-- Adding or editing item form -->
+  <div class="container mb-3" *ngIf="showAddForm || selectedItem.id">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">{{ selectedItem.id ? 'Edit Our Supporter' : 'Add Our Supporter' }}</h2>
+            <form [formGroup]="supporterForm" (ngSubmit)="selectedItem.id ? updateSupporter(selectedItem.id) : addSupporter()">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" class="form-control" formControlName="name" placeholder="Name"/>
+              </div>
+
+              <div class="mb-3" *ngIf="selectedItem.id">
+                <label>Current Image:</label><br>
+                <img [src]="selectedItem.imageUrl" alt="current image" class="img-fluid" style="max-height: 150px; max-width: 200px;" />
+                <br>
+                <small>{{ getFileName(selectedItem.imageUrl) }}</small>
+                <br><br>
+              </div>
+
+              <div class="mb-3">
+                <label for="image" class="form-label">Image:</label>
+                <input type="file" id="image" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">{{ selectedItem.id ? 'Update' : 'Submit' }}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

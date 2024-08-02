@@ -1,0 +1,164 @@
+<div *ngIf="showAddForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Add Project</h2>
+            <form [formGroup]="upcomingproject_Form" (ngSubmit)="addupcomingproject($event)">
+              <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category"[(ngModel)]="selectedCategory" >
+                  <option disabled selected value="">Select Category</option>
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div *ngIf="upcomingproject_Form.get('category')?.touched && upcomingproject_Form.get('category')?.invalid" class="text-danger">
+                  Category is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Project title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="ProjectTitle" placeholder=" Title" />
+                <div *ngIf="upcomingproject_Form.get('ProjectTitle')?.touched && upcomingproject_Form.get('ProjectTitle')?.invalid" class="text-danger">
+                  Project title is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPara" class="form-label">Paragraph:</label>
+                <input type="text" id="carrosalPara" class="form-control" formControlName="Paragraph" placeholder="Paragraph" />
+                <div *ngIf="upcomingproject_Form.get('Paragraph')?.touched && upcomingproject_Form.get('Paragraph')?.invalid" class="text-danger">
+                  Paragraph is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPara" class="form-label">Sub Title:</label>
+                <input type="text"  id="carrosalPara" class="form-control" formControlName="subtitle" placeholder="SubTitle" />
+                <div *ngIf="upcomingproject_Form.get('subtitle')?.touched && upcomingproject_Form.get('subtitle')?.invalid" class="text-danger">
+                  Subtitle is required.
+                </div>
+              </div>
+             
+              <div class="mb-3">
+                <label for="carrosalImage" class="form-label">Image:</label>
+                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center" *ngIf="!showAddForm && !showEditForm">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <!-- <mat-form-field appearance="outline">
+          <input class="p-1" matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+        </mat-form-field> -->
+        <div class="input-group custom-search-bar">
+          <input type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+      </div>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Sr .No</th>
+        <th class="text-right">Project Title</th>
+        <th>Image</th>
+        <th class="text-right">Paragraph</th>
+        <th class="text-right">Sub Title</th>
+        <th class="text-right">Category</th>
+        <th class="text-right">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+        <td>{{ i + 1 + pageIndex * pageSize }}</td>
+        <td class="text-right">{{ item.ProjectTitle }}</td>
+        <td>
+          <img [src]="item.mainImageUrl" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
+        </td>
+        <td class="text-right">{{ item.Paragraph }}</td>
+        <td>{{ item.subtitle }}</td>
+        <td class="text-right">{{ item.category }}</td>
+        <td class="text-right">
+          <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
+          <button class="btn btn-danger" (click)="deleteupcomingproject(item.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize"  (page)="onPageChange($event)">
+  </mat-paginator>
+</div>
+
+<div *ngIf="showEditForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Edit Project</h2>
+            <form [formGroup]="upcomingproject_Form" (ngSubmit)="updateUpcomingProject(selectedItem.id, $event)">
+              <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category">
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div *ngIf="upcomingproject_Form.get('category')?.touched && upcomingproject_Form.get('category')?.invalid" class="text-danger">
+                  Category is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Project title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="ProjectTitle" />
+                <div *ngIf="upcomingproject_Form.get('ProjectTitle')?.touched && upcomingproject_Form.get('ProjectTitle')?.invalid" class="text-danger">
+                  Project title is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPara" class="form-label">Paragraph:</label>
+                <input type="text" id="carrosalPara" class="form-control" formControlName="Paragraph" />
+                <div *ngIf="upcomingproject_Form.get('Paragraph')?.touched && upcomingproject_Form.get('Paragraph')?.invalid" class="text-danger">
+                  Paragraph is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPara" class="form-label">Sub Title:</label>
+                <input type="text"  id="carrosalPara" class="form-control" formControlName="subtitle"  />
+                <div *ngIf="upcomingproject_Form.get('subtitle')?.touched && upcomingproject_Form.get('subtitle')?.invalid" class="text-danger">
+                  Subtitle is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="currentImage" class="form-label">Current Image:</label><br />
+                <img [src]="selectedItem.mainImage" alt="current image" class="img-fluid mb-2" style="max-height: 150px; max-width: 200px;" />
+                <br>
+                <small>{{ getFileName(selectedItem.mainImageUrl) }}</small>
+                <br><br>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalImage" class="form-label">New Image (optional):</label>
+                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <div *ngIf="fileError" class="text-danger">{{ fileError }}</div>
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

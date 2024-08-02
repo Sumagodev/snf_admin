@@ -1,0 +1,75 @@
+<!-- cards.component.html -->
+
+
+<div *ngIf="showAddForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Important SNF Project</h2>
+            <form [formGroup]="Imp_SNF_Project_Form" (ngSubmit)="addImportant_SNF_Project_para()">
+              <div class="mb-3">
+                <label for="para" class="form-label">Add Project:</label>
+                <input type="text" id="para" class="form-control" formControlName="para" />
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center" *ngIf="!showAddForm && !showEditForm">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th class="text-start">Project Heading</th>
+        <th class="text-left">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Imp_SNF_Project_Data">
+        <td class="text-start">{{ item.para }}</td>
+        <td style="width: 200px;">
+          <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
+          <button class="btn btn-danger" (click)="deleteImportant_SNF_Project_para(item._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div *ngIf="showEditForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Edit Important SNF Project</h2>
+            <form [formGroup]="Imp_SNF_Project_Form" (ngSubmit)="updateImportant_SNF_Project_para(selectedItem._id)">
+              <div class="mb-3">
+                <label for="para" class="form-label">Edit Project:</label>
+                <input type="text" id="para" class="form-control" formControlName="para" />
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

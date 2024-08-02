@@ -1,0 +1,9 @@
+:host ::ng-deep .accordion-custom {
+  .accordion-button {
+    background-color: var(--cui-dark);
+    color: var(--cui-white);
+  }
+  .validation-error {
+    color: red;
+  }
+}

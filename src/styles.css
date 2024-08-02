@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+.mat-form-field-wrapper {
+    background-color: green !important;
+    border-radius: 15px !important; /* Adjust as needed */
+  }
+  
+  .mat-form-field-outline {
+    border-radius: 15px !important; /* Adjust as needed */
+  }

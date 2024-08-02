@@ -1,0 +1,98 @@
+<!-- <h1>2 cards</h1> -->
+
+<div *ngIf="showAddForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Add Report</h2>
+            <form [formGroup]="Home_2_Cards_Form" (submit)="add_Home_2_Cards($event)">
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label"> Report Title</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="reportnme" placeholder="Name"/>
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPDF" class="form-label">Report File:</label>
+                <input type="file" id="carrosalPDF" class="form-control" (change)="onFileChange($event)" />
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center" *ngIf="!showAddForm && !showEditForm">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <div class="input-group custom-search-bar">
+          <input type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search">
+        </div>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-success" (click)="toggleAddForm()">Add New Item</button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Sr.No</th>
+          <th>Report Title</th>
+          <th class="text-right">Report File</th>
+          <th class="text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+          <td>{{ i + 1 + pageIndex * pageSize }}</td>
+          <td class="text-right">{{ item.reportnme }}</td>
+          <td class="text-right">{{ getFileName(item.pdf) }}</td>
+          
+          <td style="width: 150px;" class="text-right">
+            <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
+            <button class="btn btn-danger" (click)="delete_Home_2_Cards(item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator
+      [length]="filteredCarrosalData.length"
+      [pageSize]="pageSize"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+<div *ngIf="showEditForm">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Edit Report</h2>
+            <form [formGroup]="Home_2_Cards_Form" (submit)="update_Home_2_Cards(selectedItem._id, $event)">
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Report Title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="reportnme" placeholder="Name" />
+              </div>
+              <div class="mb-3">
+                <label for="carrosalPDF" class="form-label">Report File:</label>
+                <input type="file" id="carrosalPDF" class="form-control" (change)="onFileChange($event)" />
+              </div>
+              <button class="btn btn-primary mt-3" type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
