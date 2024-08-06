@@ -75,7 +75,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'validation',
+        path: 'supporters',
         component: ValidationComponent,
         data: {
           title: 'Validation'

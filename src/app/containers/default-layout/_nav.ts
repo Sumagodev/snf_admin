@@ -194,6 +194,10 @@ export const navItems: INavData[] = [
       {
         name:'State Participants',
         url:'/forms/state'
+      },
+      {
+        name:'Supporters & Well Wishers',
+        url:'/forms/supporters'
       }
 
     ]

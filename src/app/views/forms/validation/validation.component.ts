@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ServiceService } from 'src/app/Service/service.service';
+
 
 @Component({
   selector: 'app-validation',
@@ -7,43 +11,162 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ValidationComponent implements OnInit {
 
-  customStylesValidated = false;
-  browserDefaultsValidated = false;
-  tooltipValidated = false;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filteredCarrosalData: any[] = [];
+  searchQuery: string = '';
+  pageSize: number = 10;
+  pageIndex: number = 0;
+  StateForm!: FormGroup;
+  StateData: any;
+  selectedItem: any = { _id: 0, name: '', imageUrl: '' };
+  showAddForm: boolean = false;
+  showEditForm: boolean = false;
 
-  constructor() { }
+  constructor(
+    private service: ServiceService,
+    private fb: FormBuilder
+  ) { }
 
-  ngOnInit(): void { }
-
-  onSubmit1() {
-    this.customStylesValidated = true;
-    console.log('Submit... 1');
+  ngOnInit(): void {
+    this.initializeForm();
+    this.fetchStateData();
   }
 
-  onReset1() {
-    this.customStylesValidated = false;
-    console.log('Reset... 1');
+  initializeForm(): void {
+    this.StateForm = this.fb.group({
+      name: ['', Validators.required],
+      imageUrl: [null]
+    });
   }
 
-  onSubmit2() {
-    this.browserDefaultsValidated = true;
-    console.log('Submit... 2');
+  fetchStateData(): void {
+    this.service.getState_Participants().subscribe(
+      (response) => {
+        console.log(response);
+        this.StateData = response;
+        this.filterData();
+        this.StateData.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  filterData() {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredCarrosalData = this.StateData.filter((item: { name: string; }) => 
+      item.name.toLowerCase().includes(query)
+    );
+    // this.filteredCarrosalData.sort((a, b) => b.id - a.id);
   }
 
-  onReset2() {
-    this.browserDefaultsValidated = false;
-    console.log('Reset... 3');
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
   }
 
-  onSubmit3() {
-    this.tooltipValidated = true;
-    console.log('Submit... 3');
+  onSearchChange() {
+    this.filterData();
   }
 
-  onReset3() {
-    this.tooltipValidated = false;
-    console.log('Reset... 3');
+  onFileChange(event: any): void {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    this.StateForm.patchValue({ imageUrl: file });
+
   }
 
+  toggleAddForm(): void {
+    this.showAddForm = true;
+    this.showEditForm = false;
+    this.resetForm();
+  }
 
+  toggleEditForm(item: any): void {
+    this.selectedItem = { ...item };
+    this.showEditForm = true;
+    this.showAddForm = false;
+    this.StateForm.patchValue({
+      name: item.name,
+      imageUrl: null  // Reset image file input when editing
+    });
+  }
+
+  resetForm(): void {
+    this.StateForm.reset();
+    this.StateForm.markAsUntouched();
+    this.StateForm.markAsPristine();
+  }
+
+  addStateTeamItem(): void {
+    if (this.StateForm.invalid) {
+      this.StateForm.markAllAsTouched();
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', this.StateForm.value.name);
+    if (this.StateForm.value.imageUrl) {
+      formData.append('imageUrl', this.StateForm.value.imageUrl);
+    } else {
+      this.StateForm.controls['imageUrl'].setErrors({ required: true });
+      return;
+    }
+
+    this.service.addState_Participants(formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.fetchStateData();
+        alert('Record Added successfully!');
+        this.showAddForm = false;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  updateStateItem(id: number,event:Event): void {
+    if (this.StateForm.invalid) {
+      this.StateForm.markAllAsTouched();
+      return;
+    }
+    debugger
+    const formData = new FormData();
+    formData.append('name', this.StateForm.value.name);
+    if (this.StateForm.value.imageUrl) {
+      formData.append('imageUrl', this.StateForm.value.imageUrl);
+    } else {
+    }
+
+    this.service.updateState_Participants(id, formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.fetchStateData();
+        alert('Record Updated successfully!');
+        this.showEditForm = false;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  deleteStateItem(id: number): void { // ID type changed to number
+    const confirmed = confirm('Are you sure you want to delete this state-participants?');
+    if (confirmed) {
+    this.service.deleteState_Participants(id).subscribe(
+      (response) => {
+        console.log(response);
+        alert('state-participants deleted successfully!');
+        this.fetchStateData();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  }
+  getFileName(url: string): string {
+    return url.split('/').pop() || '';
+  }
 }
