@@ -210,6 +210,24 @@ export class ServiceService {
     return this.http.delete(url, { responseType: 'text' });
   }
 
+//Well whishes
+private Wellwishers = 'https://snf.backend.socialforumindia.com/wellwishers';
+getWell_wishers() {
+  return this.http.get(`${this.Wellwishers}/get`)
+}
+addWell_wishers(formdata: any) {
+  return this.http.post(`${this.Wellwishers}/post`, formdata);
+}
+updateWell_wishers(id: number, formData: FormData) {
+  return this.http.put(`${this.Wellwishers}/put/${id}`, formData);
+}
+// deleteState_Participants(id: number) {
+//   return this.http.delete(`${this.StateParticipantsurl}/delete/${id}`)
+// }
+deleteWell_wishers(id: number): Observable<string> {
+  const url = `${this.Wellwishers}/delete/${id}`;
+  return this.http.delete(url, { responseType: 'text' });
+}
 
   //Who we are --> Team SNF State Participants
   private StateParticipantsurl = 'https://snf.backend.socialforumindia.com/stateparticipant';

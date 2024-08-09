@@ -40,7 +40,7 @@ export class ValidationComponent implements OnInit {
   }
 
   fetchStateData(): void {
-    this.service.getState_Participants().subscribe(
+    this.service.getWell_wishers().subscribe(
       (response) => {
         console.log(response);
         this.StateData = response;
@@ -112,7 +112,7 @@ export class ValidationComponent implements OnInit {
       return;
     }
 
-    this.service.addState_Participants(formData).subscribe(
+    this.service.addWell_wishers(formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchStateData();
@@ -138,7 +138,7 @@ export class ValidationComponent implements OnInit {
     } else {
     }
 
-    this.service.updateState_Participants(id, formData).subscribe(
+    this.service.updateWell_wishers(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchStateData();
@@ -152,12 +152,12 @@ export class ValidationComponent implements OnInit {
   }
 
   deleteStateItem(id: number): void { // ID type changed to number
-    const confirmed = confirm('Are you sure you want to delete this state-participants?');
+    const confirmed = confirm('Are you sure you want to delete this Well-Wisher?');
     if (confirmed) {
-    this.service.deleteState_Participants(id).subscribe(
+    this.service.deleteWell_wishers(id).subscribe(
       (response) => {
         console.log(response);
-        alert('state-participants deleted successfully!');
+        alert('Well-Wisher deleted successfully!');
         this.fetchStateData();
       },
       (error) => {
