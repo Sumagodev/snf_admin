@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ChartsComponent } from './charts.component';
 import { DefaultLayoutComponent } from 'src/app/containers/default-layout/default-layout.component';
+import { BreadcrumbsComponent } from '../base/breadcrumbs/breadcrumbs.component';
 
 const routes: Routes = [
   {path:'',component:DefaultLayoutComponent,
@@ -11,7 +12,8 @@ const routes: Routes = [
     component: ChartsComponent,
     data: {
       title: 'charts'
-    }}
+    }},
+ 
   ]}]
 
 @NgModule({

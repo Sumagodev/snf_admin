@@ -49,13 +49,14 @@ import { SpinnersComponent } from './spinners/spinners.component';
 import { TablesComponent } from './tables/tables.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { TabsComponent } from './tabs/tabs.component';
-import {ProjectComponent} from './projectcategory/projectcategory.component'
+import {ProjectComponent} from './projectcategory/projectcategory.component';
+
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-// import {UpcomingEventComponent} from './upcoming-event/upcoming-event.component'
+
 
 @NgModule({
   imports: [
@@ -111,7 +112,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     TabsComponent,
     PlaceholdersComponent,
     ProjectComponent,
-   
+    
   ],
 })
 export class BaseModule {}

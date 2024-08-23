@@ -17,22 +17,22 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'slider', 
+        redirectTo: '', 
       },
       {
-        path: 'slider',
+        path: '',
         component: ColorsComponent,
         data: {
           title: 'Colors',
         },
       },
-      {
-        path: 'report',
-        component: BreadcrumbsComponent,
-        data: {
-          title: 'Report',
-        },
-      },
+      // {
+      //   path: 'report',
+      //   component: BreadcrumbsComponent,
+      //   data: {
+      //     title: 'Report',
+      //   },
+      // },
       {
         path: 'our_supporter',
         component: TypographyComponent,

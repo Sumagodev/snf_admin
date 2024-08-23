@@ -30,10 +30,10 @@ const routes: Routes = [
       },
     
       {
-        path: 'breadcrumbs',
+        path: 'report',
         component: BreadcrumbsComponent,
         data: {
-          title: 'Breadcrumbs',
+          title: 'Report',
         },
       },
       {
@@ -64,6 +64,15 @@ const routes: Routes = [
           title: 'List Group',
         },
       },
+      {
+        path: 'report',
+        
+        component: BreadcrumbsComponent,
+        data: {
+          title: 'Report'
+        }
+      },
+    
       {
         path: 'navs',
         component: NavsComponent,
@@ -140,6 +149,14 @@ const routes: Routes = [
         data: {
           title: 'Tooltips',
         },
+      },
+      {
+        path: 'Paragraph',
+        
+        component: NavsComponent,
+        data: {
+          title: 'Paragraph'
+        }
       },
     ],
   },

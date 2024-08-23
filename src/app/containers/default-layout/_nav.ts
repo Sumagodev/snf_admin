@@ -19,7 +19,7 @@ export const navItems: INavData[] = [
   {
     // name: 'Colors',
     name: 'Slider',
-    url: '/home/slider',
+    url: '/home',
     iconComponent: { name: 'cil-drop' }
   },
   {
@@ -41,12 +41,21 @@ export const navItems: INavData[] = [
     url: '/home/home_article',
     iconComponent: { name: 'cil-star' }
   },
+  // {
+  //   name: 'Button groups',
+  //   name: 'Report',
+  //   url: '/home/report',
+  //   iconComponent: { name: 'cil-star' }
+  // },
   {
     // name: 'Button groups',
     name: 'Report',
-    url: '/home/report',
+    url: '/home1/report',
     iconComponent: { name: 'cil-star' }
   },
+
+ 
+  
   {
     // name: 'Base',
     
@@ -116,6 +125,13 @@ export const navItems: INavData[] = [
         name: 'Add Project Detail',
         url: '/home1/project_detail'
       },
+      {
+        // name: 'Button groups',
+        name: 'Paragraph',
+        url: '/home1/Paragraph',
+        
+      },
+      
     ]
   },
   {
@@ -208,6 +224,7 @@ export const navItems: INavData[] = [
     url: '/charts',
     iconComponent: { name: 'cil-bell' }
   },
+  
   // {
   //   name: 'Icons',
   //   iconComponent: { name: 'cil-star' },

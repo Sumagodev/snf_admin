@@ -94,15 +94,29 @@ export class ChartsComponent implements OnInit {
   //   );
   // }
   onDelete(id: number): void {
-    this.apiService.deletedata(id).subscribe(
-      (response) => {
-        console.log(response);
-        this.loadFormData();
-        location.reload();
-      },
-      (error) => {
-        console.error(error);
-      }
+    // this.apiService.deletedata(id).subscribe(
+    //   (response) => {
+    //     console.log(response);
+    //     this.loadFormData();
+    //     location.reload();
+    //   },
+    //   (error) => {
+    //     console.error(error);
+    //   }
+    const confirmed = confirm('Are you sure you want to delete this contact?');
+  
+    if (confirmed) {
+      this.apiService.deletedata(id).subscribe(
+        () => {
+          this.loadFormData();
+          location.reload();
+          // Show success alert
+          alert('Contact deleted successfully!');
+        },
+        (error) => {
+          console.error('Error deleting project', error);
+        }
     );
   }
-}
+
+  }}

@@ -296,18 +296,22 @@ deleteWell_wishers(id: number): Observable<string> {
 
 
   //Who we do --> OnGoingProject_Health_MedicalProjects
-  private OnGoingProject_Health_MedicalProjectsurl = 'https://snf.backend.socialforumindia.com/OnGoingProject_Health_MedicalProjects';
+  // private OnGoingProject_Health_MedicalProjectsurl = 'https://snf.backend.socialforumindia.com/upcomingeventsRoute';
+  private OnGoingProject_Health_MedicalProjectsurl = 'https://snf.backend.socialforumindia.com/upcomingeventsRoute';
+
+  // private OnGoingProject_Health_MedicalProjectsurl = 'https://snf.backend.socialforumindia.com/OnGoingProject_Health_MedicalProjects';
   getOnGoingProject_Health_MedicalProjects() {
-    return this.http.get(`${this.OnGoingProject_Health_MedicalProjectsurl}/get`)
+    return this.http.get(`${this.OnGoingProject_Health_MedicalProjectsurl}/getAlleventinfoData`)
   }
   addOnGoingProject_Health_MedicalProjects(formdata: any) {
-    return this.http.post(`${this.OnGoingProject_Health_MedicalProjectsurl}/post`, formdata);
+    
+    return this.http.post(`https://snf.backend.socialforumindia.com/upcomingeventsRoute/addInfoByCategory`, formdata);
   }
   updateOnGoingProject_Health_MedicalProjects(id: number, formData: FormData) {
-    return this.http.put(`${this.OnGoingProject_Health_MedicalProjectsurl}/put/${id}`, formData);
+    return this.http.put(`${this.OnGoingProject_Health_MedicalProjectsurl}/eventInfo/${id}`, formData);
   }
   deleteOnGoingProject_Health_MedicalProjects(id: number) {
-    return this.http.delete(`${this.OnGoingProject_Health_MedicalProjectsurl}/delete/${id}`)
+    return this.http.delete(`${this.OnGoingProject_Health_MedicalProjectsurl}/deleteeventinfo/${id}`)
   }
 
 

@@ -7,8 +7,13 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import { AuthGuard } from './auth.guard';
+import { BreadcrumbComponent } from '@coreui/angular';
+import { BreadcrumbsComponent } from './views/base/breadcrumbs/breadcrumbs.component';
+import { NavsComponent } from './views/base/navs/navs.component';
 
 const routes: Routes = [
+
+
   {path:'',component:LoginComponent},
   
   // 
@@ -17,8 +22,12 @@ const routes: Routes = [
    path: 'main',
    
     canActivate:[AuthGuard],
+   
     loadChildren:()=>import('./views/dashboard/dashboard.module').then((m)=>m.DashboardModule)
     },
+
+
+  
   // { path: '', component: LoginComponent },
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
 
@@ -88,13 +97,7 @@ const routes: Routes = [
       },
     
   
-  {
-    path: '404',
-    component: Page404Component,
-    data: {
-      title: 'Page 404'
-    }
-  },
+
   {
     path: '500',
     component: Page500Component,

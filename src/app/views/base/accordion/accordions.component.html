@@ -63,13 +63,13 @@
   <hr />
 
   <div class="table-responsive">
-    <table class="table table-bordered table-striped">
+    <table class=" table table-responsive table-bordered table-striped">
       <thead>
         <tr>
           <th>Sr. No</th>
           <th class="text-right">Title</th>
 
-          <th>Image</th>
+          <th >Image</th>
           <th class="text-right">Paragraph</th>
           <th class="text-right">City</th>
           <th class="text-right">Action</th>
@@ -81,13 +81,13 @@
 
           <td class="text-right">{{ item.name }}</td>
 
-          <td style="width: 250px;">
+          <td style="width: 200px;">
             <img [src]="item.imageUrl" alt="image"
                  style="max-height: 150px; max-width: 200px; float: left; margin-right: 10px;" />
           </td>
-          <td class="text-right">{{ item.para }}</td>
-          <td class="text-right">{{ item.city }}</td>
-          <td style="width: 150px;" class="text-right">
+          <td style="width: 350px;"  class="text-right">{{ item.para }}</td>
+          <td  style="width: 150px;"  class="text-right">{{ item.city }}</td>
+          <td  class="text-right">
             <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
             <button class="btn btn-danger" (click)="delete_Home_4_Cards(item.id)">Delete</button>
           </td>

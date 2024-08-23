@@ -4,19 +4,70 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title mb-4">Add Educational Facilities Project </h2>
-            <form [formGroup]="Project_Health_MedicalProjects_Form"
-              (ngSubmit)="addOnGoingProject_Health_MedicalProjects()">
+            <h2 class="card-title mb-4">Add Upcoming Para </h2>
+            <!-- <form [formGroup]="Project_Health_MedicalProjects_Form" (ngSubmit)="addOnGoingProject_Health_MedicalProjects()">
               <div class="mb-3">
-                <label for="carrosalName" class="form-label">Name:</label>
-                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category">
+                  <option disabled selected value="">Select Category</option>
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div *ngIf="Project_Health_MedicalProjects_Form.get('category')?.touched && Project_Health_MedicalProjects_Form.get('category')?.invalid" class="text-danger">
+                  Category is required.
+                </div>
               </div>
+            
               <div class="mb-3">
-                <label for="carrosalImage" class="form-label">Image:</label>
-                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <label for="carrosalName" class="form-label">Title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="infoTitles" placeholder="Title" />
+                <div *ngIf="Project_Health_MedicalProjects_Form.get('infoTitles')?.touched && Project_Health_MedicalProjects_Form.get('infoTitles')?.invalid" class="text-danger">
+                  Title is required.
+                </div>
               </div>
-              <button class="btn btn-primary  mt-3" type="submit">Submit</button>
+              
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Description:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="infoDescriptions" placeholder="Description" />
+                <div *ngIf="Project_Health_MedicalProjects_Form.get('infoDescriptions')?.touched && Project_Health_MedicalProjects_Form.get('infoDescriptions')?.invalid" class="text-danger">
+                  Description is required.
+                </div>
+              </div>
+              
+              <button class="btn btn-primary mt-3" type="submit">Submit</button>
+            </form> -->
+
+            <form [formGroup]="upcomingproject_Form" (ngSubmit)="addupcomingproject($event)">
+              <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category"[(ngModel)]="selectedCategory" >
+                  <option disabled selected value="">Select Category</option>
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div *ngIf="upcomingproject_Form.get('category')?.touched && upcomingproject_Form.get('category')?.invalid" class="text-danger">
+                  Category is required.
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Project title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="infoTitle"  placeholder="Title"/>
+                <div *ngIf="upcomingproject_Form.get('infoTitle')?.touched && upcomingproject_Form.get('infoTitle')?.invalid" class="text-danger">
+                   Title is required.
+                </div>
+              </div>
+            
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label">Project title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="infoDescription"  placeholder="Title"/>
+                <div *ngIf="upcomingproject_Form.get('infoDescription')?.touched && upcomingproject_Form.get('infoDescription')?.invalid" class="text-danger">
+                   Title is required.
+                </div>
+              </div>
+              
+            
+              <button class="btn btn-primary mt-3" type="submit">Submit</button>
             </form>
+            
           </div>
         </div>
       </div>
@@ -39,21 +90,25 @@
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
-        <th>Image</th>
-        <th class="text-right">Health Medical Projects Title</th>
+        <th>Sr.no</th>
+        <th>Category</th>
+        <th class="text-right"> Title</th>
+        <th>Disc</th>
         <th class="text-right">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of Project_Health_MedicalProjects_Data">
-        <td>
+      <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
+        <td>{{ i + 1 + pageIndex * pageSize }}</td><!-- <td>
           <img [src]="item.imageUrl" alt="image"
             style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
-        </td>
-        <td class="text-right">{{ item.name }}</td>
+        </td> -->
+        <td class="text-right">{{ item.category }}</td>
+        <td class="text-right">{{ item.infoTitle }}</td>
+        <td class="text-right">{{ item.infoDescription }}</td>
         <td class="text-right">
           <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
-          <button class="btn btn-danger" (click)="deleteOnGoingProject_Health_MedicalProjects(item._id)">Delete</button>
+          <button class="btn btn-danger" (click)="deleteupcomingproject(item.id)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -62,23 +117,48 @@
 
 </div>
 
-<div *ngIf="showEditForm">
+<!-- <div *ngIf="showEditForm">
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title mb-4">Edit Educational Facilities Project</h2>
+            <h2 class="card-title mb-4">Edit Paragraph Project</h2>
             <form [formGroup]="Project_Health_MedicalProjects_Form"
-              (ngSubmit)="updateOnGoingProject_Health_MedicalProjects(selectedItem._id)">
+              (ngSubmit)="updateOnGoingProject_Health_MedicalProjects(selectedItem.id)">
               <div class="mb-3">
-                <label for="carrosalName" class="form-label">Name:</label>
-                <input type="text" id="carrosalName" class="form-control" formControlName="name" />
+                <label for="category" class="form-label">Category:</label>
+                <select id="category" class="form-control" formControlName="category">
+                  <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <div
+                  *ngIf="Project_Health_MedicalProjects_Form.get('category')?.touched && Project_Health_MedicalProjects_Form.get('category')?.invalid"
+                  class="text-danger">
+                  Category is required.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="carrosalName" class="form-label"> Title:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="infoTitles"
+                  placeholder="Title" />
+                <div
+                  *ngIf="Project_Health_MedicalProjects_Form.get('infoTitles')?.touched && Project_Health_MedicalProjects_Form.get('infoTitles')?.invalid"
+                  class="text-danger">
+                  Title is required.
+                </div>
               </div>
               <div class="mb-3">
-                <label for="carrosalImage" class="form-label">Image:</label>
-                <input type="file" id="carrosalImage" class="form-control" (change)="onFileChange($event)" />
+                <label for="carrosalName" class="form-label"> Disc:</label>
+                <input type="text" id="carrosalName" class="form-control" formControlName="infoDescriptions"
+                  placeholder="Disc" />
+                <div
+                  *ngIf="Project_Health_MedicalProjects_Form.get('infoDescriptions')?.touched && Project_Health_MedicalProjects_Form.get('infoDescriptions')?.invalid"
+                  class="text-danger">
+                  Title is required.
+                </div>
               </div>
+
               <button class="btn btn-primary mt-3" type="submit">Update</button>
             </form>
           </div>
@@ -86,4 +166,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

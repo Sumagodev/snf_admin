@@ -9,6 +9,7 @@
             <h2 class="card-title mb-4">Add Report</h2>
             <form [formGroup]="Home_2_Cards_Form" (submit)="add_Home_2_Cards($event)">
               <div class="mb-3">
+                
                 <label for="carrosalName" class="form-label"> Report Title</label>
                 <input type="text" id="carrosalName" class="form-control" formControlName="reportnme" placeholder="Name"/>
               </div>
@@ -57,7 +58,7 @@
           <td class="text-right">{{ item.reportnme }}</td>
           <td class="text-right">{{ getFileName(item.pdf) }}</td>
           
-          <td style="width: 150px;" class="text-right">
+          <td class="text-right">
             <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
             <button class="btn btn-danger" (click)="delete_Home_2_Cards(item.id)">Delete</button>
           </td>
@@ -79,7 +80,7 @@
         <div class="card">
           <div class="card-body">
             <h2 class="card-title mb-4">Edit Report</h2>
-            <form [formGroup]="Home_2_Cards_Form" (submit)="update_Home_2_Cards(selectedItem._id, $event)">
+            <form [formGroup]="Home_2_Cards_Form" (submit)="update_Home_2_Cards(selectedItem.id, $event)">
               <div class="mb-3">
                 <label for="carrosalName" class="form-label">Report Title:</label>
                 <input type="text" id="carrosalName" class="form-control" formControlName="reportnme" placeholder="Name" />

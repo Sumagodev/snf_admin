@@ -157,24 +157,19 @@ onSearchChange() {
   //   }
   // }
   updateSupporter(id: number): void {
+    // event.preventDefault();
     if (this.supporterForm.invalid) {
-      this.supporterForm.markAllAsTouched(); // Mark all fields as touched to show validation messages
+      this.supporterForm.markAllAsTouched();
       return;
     }
 
     const formData = new FormData();
-    const nameControl = this.supporterForm.get('name');
-    const imageControl = this.supporterForm.get('image');
-
-    if (nameControl) {
-      formData.append('name', nameControl.value);
-    }
-
-    const file = imageControl?.value;
-    if (file) {
-      formData.append('imageUrl', file);
+    formData.append('name', this.supporterForm.value.name);
+    
+ 
+    if (this.supporterForm.value.imageUrl) {
+      formData.append('imageUrl', this.supporterForm.value.imageUrl);
     } else {
-      
     }
 
     this.service.updateSupporter(id, formData).subscribe(
@@ -183,14 +178,47 @@ onSearchChange() {
         this.fetchsupporterData();
         alert('Record Updated successfully!');
         this.showEditForm = false;
-        this.showAddForm = false; // Ensure the form is closed
-        this.resetForm();
       },
       (error) => {
         console.error(error);
       }
     );
   }
+  // updateSupporter(id: number): void {
+  //   if (this.supporterForm.invalid) {
+  //     this.supporterForm.markAllAsTouched(); // Mark all fields as touched to show validation messages
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+  //   const nameControl = this.supporterForm.get('name');
+  //   const imageControl = this.supporterForm.get('image');
+
+  //   if (nameControl) {
+  //     formData.append('name', nameControl.value);
+  //   }
+
+  //   const file = imageControl?.value;
+  //   if (file) {
+  //     formData.append('imageUrl', file);
+  //   } else {
+      
+  //   }
+
+  //   this.service.updateSupporter(id, formData).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.fetchsupporterData();
+  //       alert('Record Updated successfully!');
+  //       this.showEditForm = false;
+  //       this.showAddForm = false; // Ensure the form is closed
+  //       this.resetForm();
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
 
   
   
@@ -202,7 +230,6 @@ onSearchChange() {
       return;
     }
   
-    // Ask for confirmation before deleting
     const confirmed = confirm('Are you sure you want to delete this Clients?');
   
     if (confirmed) {

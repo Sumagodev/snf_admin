@@ -15,9 +15,11 @@ export class BreadcrumbsComponent implements OnInit {
   pageIndex: number = 0;
   Home_2_Cards_Form: FormGroup | any;
   Home_2_Cards_Data: any;
+  fileError: string = '';
   selectedItem: any = { _id: '', reportnme: '', pdf: '' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
+
 
   constructor(
     private service: ServiceService,
@@ -27,6 +29,7 @@ export class BreadcrumbsComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.fetchHome_2_Cards_Data();
+    
   }
 
   initializeForm(): void {
@@ -42,6 +45,7 @@ export class BreadcrumbsComponent implements OnInit {
         console.log(response);
         this.Home_2_Cards_Data = response;
         this.filterData();
+        
       },
       (error) => {
         console.error(error);
@@ -66,10 +70,20 @@ export class BreadcrumbsComponent implements OnInit {
     this.filterData();
   }
 
+  // onFileChange(event: any): void {
+  //   const file = (event.target as HTMLInputElement)?.files?.[0];
+  //   this.Home_2_Cards_Form.patchValue({ pdf: file });
+  // }
   onFileChange(event: any): void {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    this.Home_2_Cards_Form.patchValue({ pdf: file });
+    if (file) {
+      this.Home_2_Cards_Form.patchValue({ pdf: file });
+      this.fileError = '';
+    } else {
+      this.fileError = 'PDF file is required.';
+    }
   }
+
 
   toggleAddForm(): void {
     this.showAddForm = true;
@@ -111,16 +125,44 @@ export class BreadcrumbsComponent implements OnInit {
     );
   }
 
+  // update_Home_2_Cards(id: number, event: Event): void {
+  //   event.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append('reportnme', this.Home_2_Cards_Form.value.reportnme);
+  //   formData.append('pdf', this.Home_2_Cards_Form.value.pdf);
+
+  //   this.service.updatereport(id, formData).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       this.fetchHome_2_Cards_Data();
+  //       this.showEditForm = false;
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
   update_Home_2_Cards(id: number, event: Event): void {
     event.preventDefault();
+    if (this.Home_2_Cards_Form.invalid) {
+      this.Home_2_Cards_Form.markAllAsTouched();
+      return;
+    }
+
     const formData = new FormData();
     formData.append('reportnme', this.Home_2_Cards_Form.value.reportnme);
-    formData.append('pdf', this.Home_2_Cards_Form.value.pdf);
+    
+ 
+    if (this.Home_2_Cards_Form.value.pdf) {
+      formData.append('pdf', this.Home_2_Cards_Form.value.pdf);
+    } else {
+    }
 
     this.service.updatereport(id, formData).subscribe(
       (response) => {
         console.log(response);
         this.fetchHome_2_Cards_Data();
+        alert('Record Updated successfully!');
         this.showEditForm = false;
       },
       (error) => {
@@ -128,25 +170,59 @@ export class BreadcrumbsComponent implements OnInit {
       }
     );
   }
-
-  delete_Home_2_Cards(id: number): void {
-   
+  delete_Home_2_Cards(id: number | undefined): void {
+    if (!id || id <= 0) {
+      console.error('Invalid ID for delete operation:', id);
+      return;
+    }
+  
     const confirmed = confirm('Are you sure you want to delete this Report?');
   
     if (confirmed) {
       this.service.deletereport(id).subscribe(
-        (response) => {
-          console.log(response);
-          this.fetchHome_2_Cards_Data();
+        () => {
+          console.log('Report deleted successfully');
+  
+          // Remove the deleted item from support_data
+          // this.fetchHome_2_Cards_Data = this.fetchHome_2_Cards_Data.filter((item: any) => item.id !== id);
+  
+          // Optionally, reset selectedItem and form if necessary
+          this.selectedItem = { _id: '', name: '', imageUrl: '' };
+          this.Home_2_Cards_Form.reset();
+          this.showAddForm = false;
+  
           // Show success alert
-          alert('Report deleted successfully!');
+          alert(' deleted successfully!');
+          this.fetchHome_2_Cards_Data(); 
         },
         (error) => {
-          console.error(error);
+          console.error('Error deleting supporter:', error);
         }
       );
     }
   }
+  
+  // delete_Home_2_Cards(id: number): void {
+   
+  //   const confirmed = confirm('Are you sure you want to delete this Report?');
+  
+  //   if (confirmed) {
+  //     this.service.deletereport(id).subscribe(
+  //       (response) => {
+  //         console.log(response);
+  //         this.fetchHome_2_Cards_Data();
+  //         this.Home_2_Cards_Form.reset();
+  //         // Show success alert
+  //         alert('Report deleted successfully!');
+  //         this.fetchHome_2_Cards_Data();
+  //       },
+        
+  //       (error) => {
+  //         console.error(error);
+  //       }
+  //     );
+  //   }
+  // }
   getFileName(url: string): string {
     const parts = url.split('/');
     return parts[parts.length - 1];
