@@ -8,7 +8,8 @@
             <form [formGroup]="Project_Form" (ngSubmit)="addProject($event)">
               <div class="mb-3">
                 <label for="projectName" class="form-label">Project Category:</label>
-                <input type="text" class="form-control" formControlName="name" placeholder="Name"/>
+                <angular-editor  [config]="config" formControlName="name"></angular-editor>
+                <!-- <input type="text" class="form-control" formControlName="name" placeholder="Name"/> -->
                 <div *ngIf="Project_Form.get('name')?.touched && Project_Form.get('name')?.invalid" class="text-danger">
                   Name is required.
                 </div>
@@ -51,7 +52,8 @@
     <tbody>
       <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
         <td>{{ i + 1 + pageIndex * pageSize }}</td>
-        <td class="text-right">{{ item.name }}</td>
+        <td class="text-right" [innerHTML]="item.name"></td>
+        
         <td class="text-right">
           <button class="btn btn-primary" (click)="toggleEditForm(item)">Edit</button>&nbsp;
           <button class="btn btn-danger" (click)="deleteProject(item.id)">Delete</button>
@@ -81,7 +83,7 @@
             <form [formGroup]="Project_Form" (ngSubmit)="updateProject(selectedItem.id)">
               <div class="mb-3">
                 <label for="projectName" class="form-label">Name:</label>
-                <input type="text" id="projectName" class="form-control" formControlName="name" />
+                <angular-editor  [config]="config" formControlName="name"></angular-editor>
                 <div *ngIf="Project_Form.get('name')?.touched && Project_Form.get('name')?.invalid" class="text-danger">
                   Name is required.
                 </div>

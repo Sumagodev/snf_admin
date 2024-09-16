@@ -16,7 +16,7 @@ export class FounderTeamComponent implements OnInit {
   pageIndex: number = 0;
   FounderForm!: FormGroup;
   FounderData: any;
-  selectedItem: any = { _id: '', name: '', imageUrl: '' };
+  selectedItem: any = { _id: '', name: '', imageUrl: '',position:'' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   fileError: string = '';
@@ -34,6 +34,7 @@ export class FounderTeamComponent implements OnInit {
   initializeForm(): void {
     this.FounderForm = this.fb.group({
       name: ['', Validators.required],
+      position: ['', Validators.required],
       imageUrl: [null, Validators.required]
     });
   }
@@ -82,6 +83,7 @@ onSearchChange() {
     this.showAddForm = false;
     this.FounderForm.patchValue({
       name:item.name,
+      position:item.position,
       imageurl:item.imageUrl
     })
   }
@@ -95,6 +97,7 @@ onSearchChange() {
   addFounderItem(): void {
     const formData = new FormData();
     formData.append('name', this.FounderForm.value.name);
+    formData.append('position', this.FounderForm.value.position);
     formData.append('imageUrl', this.FounderForm.value.imageUrl);
 
     this.service.addFounderParticipant(formData).subscribe(
@@ -119,6 +122,8 @@ onSearchChange() {
   }
   const formData = new FormData();
   formData.append('name', this.FounderForm.value.name);
+  formData.append('position', this.FounderForm.value.position);
+  
   if (this.FounderForm.value.imageUrl instanceof File) {
     formData.append('imageUrl', this.FounderForm.value.imageUrl);
   } else {

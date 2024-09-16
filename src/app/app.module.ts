@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 
 
+
 import {
   AvatarModule,
   BadgeModule,
@@ -92,7 +93,9 @@ const APP_CONTAINERS = [
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
-    DocsComponentsModule
+    DocsComponentsModule,
+  
+    
   ],
   providers: [
     {

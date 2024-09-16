@@ -38,7 +38,8 @@ export const navItems: INavData[] = [
   {
     // name: 'Button groups',
     name: 'Home Articles',
-    url: '/home/home_article',
+    url:'/forms/news-articles',
+    
     iconComponent: { name: 'cil-star' }
   },
   // {
@@ -63,51 +64,7 @@ export const navItems: INavData[] = [
     url: '/home1',
     iconComponent: { name: 'cil-puzzle' },
     children: [
-      // {
-      //   // name: 'Accordion',
-      //   name: 'Testimonial',
-      //   url: '/base/accordion'
-      // },
-      // {
-      //   // name: 'Breadcrumbs',
-      //   name: '2-Cards',
-      //   url: '/base/breadcrumbs'
-      // },
-      // {
-      //   // name: 'Cards',
-      //   name: 'Imp Project Carrired By SNF',
-      //   url: '/base/cards'
-      // },
-      // {
-      //   // name: 'Carousel',
-      //   name: 'Clean Water Projects',
-      //   url: '/base/carousel'
-      // },
-      // {
-      //   // name: 'Collapse',
-      //   name: 'Shahid Jawan Fund',
-      //   url: '/base/collapse'
-      // },
-      // {
-      //   // name: 'List Group',
-      //   name: 'Educational Facilities',
-      //   url: '/base/list-group'
-      // },
-      // {
-      //   // name: 'Navs & Tabs',
-      //   name: 'Health & Medical Projects',
-      //   url: '/base/navs'
-      // },
-      // {
-      //   //   name: 'Pagination',
-      //   name: 'Environmental Conservation',
-      //   url: '/base/pagination'
-      // },
-      // {
-      //   // name: 'Placeholder',
-      //   name: 'Sport Projects',
-      //   url: '/base/placeholder'
-      // },
+    
     
       {
         //name;'projectcategory'
@@ -122,12 +79,12 @@ export const navItems: INavData[] = [
      
       {
         //   name: 'Popovers',
-        name: 'Add Project Detail',
+        name: 'Add Project Images',
         url: '/home1/project_detail'
       },
       {
         // name: 'Button groups',
-        name: 'Paragraph',
+        name: 'Add Project Detail',
         url: '/home1/Paragraph',
         
       },
@@ -153,7 +110,7 @@ export const navItems: INavData[] = [
       },
       {
         name:'News And Articles',
-        url:'/forms/news-articles'
+        url: '/home/home_article',
       },
     ]
   },
@@ -194,27 +151,32 @@ export const navItems: INavData[] = [
     //     name: 'Validation',
     //     url: '/forms/validation'
     //   },
-      
-     { 
-     name:'Mentors',
-     url:'/forms/mentors'
-     },
-     { 
+    { 
       name:'Founder',
       url:'/forms/founder-team'
       },
+     { 
+     name:'Pillars Of Wisdom',
+     url:'/forms/mentors'
+     },
+    
       {
-        name:'Nri Participants',
+        name:'Global Ambaciator',
         url:'/forms/nri-participants'
       },
       {
-        name:'State Participants',
+        name:'Honour Lagacy',
         url:'/forms/state'
       },
       {
-        name:'Supporters & Well Wishers',
+        name:'Constant Pillars',
         url:'/forms/supporters'
-      }
+      },
+      {
+        name:'Nation Wide Supporter',
+        url:'/forms/nationsupporter'
+      },
+     
 
     ]
    },

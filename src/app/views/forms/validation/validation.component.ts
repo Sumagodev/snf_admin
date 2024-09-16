@@ -18,7 +18,7 @@ export class ValidationComponent implements OnInit {
   pageIndex: number = 0;
   StateForm!: FormGroup;
   StateData: any;
-  selectedItem: any = { _id: 0, name: '', imageUrl: '' };
+  selectedItem: any = { _id: 0, name: '', imageUrl: '',position:'' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
 
@@ -35,6 +35,8 @@ export class ValidationComponent implements OnInit {
   initializeForm(): void {
     this.StateForm = this.fb.group({
       name: ['', Validators.required],
+      position: ['', Validators.required],
+
       imageUrl: [null]
     });
   }
@@ -87,6 +89,8 @@ export class ValidationComponent implements OnInit {
     this.showAddForm = false;
     this.StateForm.patchValue({
       name: item.name,
+      position: item.position,
+
       imageUrl: null  // Reset image file input when editing
     });
   }
@@ -105,6 +109,8 @@ export class ValidationComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('name', this.StateForm.value.name);
+    formData.append('position', this.StateForm.value.position);
+
     if (this.StateForm.value.imageUrl) {
       formData.append('imageUrl', this.StateForm.value.imageUrl);
     } else {

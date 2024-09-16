@@ -16,7 +16,7 @@ export class MentorsComponent implements OnInit {
   pageIndex: number = 0;
   mentorForm!: FormGroup;
   mentorData: any;
-  selectedItem: any = { _id: '', name: '', imageUrl: '' };
+  selectedItem: any = { _id: '', name: '', imageUrl: '',position:'' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   fileError: string = '';
@@ -34,6 +34,8 @@ export class MentorsComponent implements OnInit {
   initializeForm(): void {
     this.mentorForm = this.fb.group({
       name: ['', Validators.required],
+      position: ['', Validators.required],
+
       imageUrl: [null]
     });
   }
@@ -88,6 +90,7 @@ export class MentorsComponent implements OnInit {
     this.showAddForm = false;
     this.mentorForm.patchValue({
       name: item.name,
+      position: item.position,
       imageUrl: null
     });
   }
@@ -105,6 +108,8 @@ export class MentorsComponent implements OnInit {
     }
     const formData = new FormData();
     formData.append('name', this.mentorForm.value.name);
+    formData.append('position', this.mentorForm.value.position);
+
     const file = this.mentorForm.value.imageUrl;
 
     if (!file) {
@@ -135,6 +140,8 @@ export class MentorsComponent implements OnInit {
 
   const formData = new FormData();
   formData.append('name', this.mentorForm.value.name);
+  formData.append('position', this.mentorForm.value.position);
+
 
 if (this.mentorForm.value.imageUrl instanceof File) {
     formData.append('imageUrl', this.mentorForm.value.imageUrl);

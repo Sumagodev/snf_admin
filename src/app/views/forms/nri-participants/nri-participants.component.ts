@@ -17,7 +17,7 @@ export class NriParticipantsComponent implements OnInit{
 
   NriForm!: FormGroup;
   NriData: any;
-  selectedItem: any = { _id: '', name: '', imageUrl: '' };
+  selectedItem: any = { _id: '', name: '', imageUrl: '',position:'' };
   showAddForm: boolean = false;
   showEditForm: boolean = false;
   fileError: string = '';
@@ -35,6 +35,8 @@ export class NriParticipantsComponent implements OnInit{
   initializeForm(): void {
     this.NriForm = this.fb.group({
       name: ['', Validators.required],
+      position: ['', Validators.required],
+
       imageUrl: [null, Validators.required]
     });
   }
@@ -82,6 +84,8 @@ export class NriParticipantsComponent implements OnInit{
     this.showAddForm = false;
     this.NriForm.patchValue({
       name:item.name,
+      position:item.position,
+
       imageurl:item.imageUrl
     })
   }
@@ -95,6 +99,8 @@ export class NriParticipantsComponent implements OnInit{
   addNriTeamItem(): void {
     const formData = new FormData();
     formData.append('name', this.NriForm.value.name);
+    formData.append('position', this.NriForm.value.position);
+
     formData.append('imageUrl', this.NriForm.value.imageUrl);
 
     this.service.addNRI_Participants(formData).subscribe(
@@ -120,6 +126,8 @@ export class NriParticipantsComponent implements OnInit{
 
  const formData = new FormData();
  formData.append('name', this.NriForm.value.name);
+ formData.append('position', this.NriForm.value.position);
+
 if (this.NriForm.value.imageUrl instanceof File) {
    formData.append('imageUrl', this.NriForm.value.imageUrl);
  } else {

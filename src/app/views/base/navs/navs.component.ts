@@ -2,13 +2,49 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
-
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-navs',
   templateUrl: './navs.component.html',
   styleUrls: ['./navs.component.scss']
 })
 export class NavsComponent implements OnInit {
+  // editor = ClassicEditor;
+  // public Editor = ClassicEditor
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    minHeight: '25rem',
+    maxHeight: '20rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    sanitize: false,
+    toolbarPosition: 'top',
+    defaultFontName: 'Arial',
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+      
+    ],
+    // Toolbar configuration including image button
+ 
+    // Additional configuration for image uploading if required
+ 
+  };
+  
 @ViewChild(MatPaginator) paginator!: MatPaginator;
 filteredCarrosalData: any[] = [];
 searchQuery: string = '';
@@ -17,7 +53,7 @@ pageIndex: number = 0;
 upcomingproject_Form!: FormGroup;
 upcomingProject_Data: any;
 filteredProjects: any;
-selectedItem: any = { id: '',infoTitle: '', category: '', infoDescription: '' };
+selectedItem: any = { id: '',infoTitles: '', category: '', infoDescriptions: '' };
 categories: any[] = [];
 selectedCategory: string = '';
 showAddForm: boolean = false;
@@ -38,9 +74,9 @@ ngOnInit(): void {
 
 initializeForm(): void {
   this.upcomingproject_Form = this.fb.group({
-    infoTitle: ['', Validators.required],
+    infoTitles: ['', Validators.required],
     category: ['', Validators.required],
-   infoDescription: ['', Validators.required],
+    infoDescriptions: ['', Validators.required],
   });
 }
 
@@ -49,7 +85,7 @@ fetchupcomingProject_Data(): void {
     (response) => {
       console.log(response);
       this.data = response;
-      this.filterData();
+      // this.filterData();
       // this.data.sort((a:any, b: any) => b.id - a.id);
       console.log(this.data);
       // this.filterProjects();
@@ -132,10 +168,10 @@ toggleEditForm(item: any): void {
   this.showAddForm = false;
 
   this.upcomingproject_Form.patchValue({
-    imageTitles: item.ProjectTitle,
- 
+    infoTitles: item.infoTitles,
+
     category: item.category,
-    images: null
+    infoDescriptions:item.infoDescriptions
   });
 }
 
@@ -146,19 +182,39 @@ resetForm(): void {
   this.fileError = '';
 }
 
+// addupcomingproject(event: Event): void {
+//   event.preventDefault();
+
+//   const formData = new FormData();
+//   formData.append('infoTitles', this.upcomingproject_Form.value.infoTitles);
+//   formData.append('category', this.upcomingproject_Form.value.category);
+//   formData.append('infoDescriptions', this.upcomingproject_Form.value.infoDescriptions);
+
+//   this.service.addOnGoingProject_Health_MedicalProjects(formData).subscribe(
+//     (response) => {
+//       console.log(response, "responseresponseresponse");
+//       this.fetchupcomingProject_Data();
+//       alert('Record Added successfully!');
+//       this.showAddForm = false;
+//     },
+//     (error) => {
+//       console.error(error);
+//     }
+//   );
+// }
+
 addupcomingproject(event: Event): void {
   event.preventDefault();
 
+  const projectData = {
+    infoTitles: this.upcomingproject_Form.value.infoTitles,
+    category: this.upcomingproject_Form.value.category,
+    infoDescriptions: this.upcomingproject_Form.value.infoDescriptions
+  };
 
-  const formData = new FormData();
-  formData.append('infoTitle', this.upcomingproject_Form.value.infoTitle);
- 
-  formData.append('category', this.upcomingproject_Form.value.category);
-  formData.append('infoDescription', this.upcomingproject_Form.value.infoDescription);
-
-  this.service.addOnGoingProject_Health_MedicalProjects(formData).subscribe(
+  this.service.addOnGoingProject_Health_MedicalProjects(projectData).subscribe(
     (response) => {
-      console.log(response);
+      console.log(response, "responseresponseresponse");
       this.fetchupcomingProject_Data();
       alert('Record Added successfully!');
       this.showAddForm = false;
@@ -169,31 +225,23 @@ addupcomingproject(event: Event): void {
   );
 }
 
-updateUpcomingProject(id: number, event: Event): void {
+updateUpcomingProject(id:any,event: Event): void {
   event.preventDefault();
-  if (this.upcomingproject_Form.invalid) {
-    this.upcomingproject_Form.markAllAsTouched();
-    this.fileError = this.upcomingproject_Form.get('images')?.value ? '' : 'Image file is required.';
-    return;
-  }
 
-  const formData = new FormData();
-  formData.append('imageTitles', this.upcomingproject_Form.value.imageTitles);
+  const updatedProjectData = {
+    infoTitles: this.upcomingproject_Form.value.infoTitles,
+    category: this.upcomingproject_Form.value.category,
+    infoDescriptions: this.upcomingproject_Form.value.infoDescriptions
+  };
 
-  formData.append('category', this.upcomingproject_Form.value.category);
+  // const projectId = this.upcomingproject_Form.value.id; // Assuming you have the project ID in your form.
 
-  if (this.upcomingproject_Form.value.mainImageUrl) {
-    formData.append('images', this.upcomingproject_Form.value.images);
-  } else {
-  }
-
-  this.service.updateupcomingimage(id, formData).subscribe(
+  this.service.updateOnGoingProject_Health_MedicalProjects(id, updatedProjectData).subscribe(
     (response) => {
-      console.log(response);
+      console.log(response, "Update Response");
       this.fetchupcomingProject_Data();
       alert('Record Updated successfully!');
-      this.showEditForm = false;
-      this.resetForm();
+      this.showAddForm = false;
     },
     (error) => {
       console.error(error);
@@ -201,12 +249,13 @@ updateUpcomingProject(id: number, event: Event): void {
   );
 }
 
+
 deleteupcomingproject(id: number): void {
   // Ask for confirmation before deleting
   const confirmed = confirm('Are you sure you want to delete this Ongoing project?');
 
   if (confirmed) {
-    this.service.deleteupcomingimage(id).subscribe(
+    this.service.deleteOnGoingProject_Health_MedicalProjects(id).subscribe(
       (response) => {
         console.log(response);
         this.fetchupcomingProject_Data();
@@ -229,7 +278,7 @@ getFileName(url: string): string {
 // export class NavsComponent implements OnInit {
 //   Project_Health_MedicalProjects_Form!: FormGroup;
 //   Project_Health_MedicalProjects_Data: any;
-//   selectedItem: any = { id: '', category: '', infoTitles: '',infoDescriptions:'' };
+//   selectedItem: any = { id: '', category: '', infoTitless: '',infoDescriptions:'' };
 //   showAddForm: boolean = false;
 //   showEditForm: boolean = false;
 //   categories: any;
@@ -248,13 +297,13 @@ getFileName(url: string): string {
 // // initializeForm(): void {
 // //   this.Project_Health_MedicalProjects_Form = this.fb.group({
 // //     category: ['', Validators.required],
-// //     infoTitles: ['', Validators.required],
+// //     infoTitless: ['', Validators.required],
 // //     infoDescriptions: ['', Validators.required],
 // //   });
 // // }
 // initializeForm(): void {
 //   this.Project_Health_MedicalProjects_Form = this.fb.group({
-//        infoTitles: ['', Validators.required],
+//        infoTitless: ['', Validators.required],
 //     infoDescriptions: ['', Validators.required],
 //     category: ['', Validators.required],
    
@@ -306,7 +355,7 @@ getFileName(url: string): string {
 //   addOnGoingProject_Health_MedicalProjects(): void {
 //     const formData = new FormData();
 //     formData.append('category', this.Project_Health_MedicalProjects_Form.value.category);
-//     formData.append('infoTitles', this.Project_Health_MedicalProjects_Form.value.infoTitles);
+//     formData.append('infoTitless', this.Project_Health_MedicalProjects_Form.value.infoTitless);
 //     formData.append('infoDescriptions', this.Project_Health_MedicalProjects_Form.value.infoDescriptions);
 // console.log(formData, "formDataformDataformData");
 //     this.service.addOnGoingProject_Health_MedicalProjects(formData).subscribe(
@@ -325,7 +374,7 @@ getFileName(url: string): string {
 
 //   updateOnGoingProject_Health_MedicalProjects(id: number): void {
 //     const formData = new FormData();
-//     formData.append('infoTitles', this.Project_Health_MedicalProjects_Form.value.infoTitles);
+//     formData.append('infoTitless', this.Project_Health_MedicalProjects_Form.value.infoTitless);
 //     formData.append('infoDescriptions', this.Project_Health_MedicalProjects_Form.value.infoDescriptions);
 
 //     this.service.updateOnGoingProject_Health_MedicalProjects(id, formData).subscribe(

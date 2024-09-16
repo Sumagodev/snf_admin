@@ -33,7 +33,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'select',
+        path: 'nationsupporter',
         component: SelectComponent,
         data: {
           title: 'Select'

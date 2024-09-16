@@ -209,7 +209,25 @@ export class ServiceService {
     const url = `${this.NRIParticipantsurl}/delete/${id}`;
     return this.http.delete(url, { responseType: 'text' });
   }
+  // nationwidesupport
 
+  private nationwidesupport = 'https://snf.backend.socialforumindia.com/nationwidesupport';
+getnationwidesupport() {
+  return this.http.get(`${this.nationwidesupport}/get`)
+}
+addnationwidesupport(formdata: any) {
+  return this.http.post(`${this.nationwidesupport}/post`, formdata);
+}
+updatenationwidesupport(id: number, formData: FormData) {
+  return this.http.put(`${this.nationwidesupport}/put/${id}`, formData);
+}
+// deleteState_Participants(id: number) {
+//   return this.http.delete(`${this.StateParticipantsurl}/delete/${id}`)
+// }
+deletenationwidesupport(id: number): Observable<string> {
+  const url = `${this.nationwidesupport}/delete/${id}`;
+  return this.http.delete(url, { responseType: 'text' });
+}
 //Well whishes
 private Wellwishers = 'https://snf.backend.socialforumindia.com/wellwishers';
 getWell_wishers() {
@@ -303,12 +321,16 @@ deleteWell_wishers(id: number): Observable<string> {
   getOnGoingProject_Health_MedicalProjects() {
     return this.http.get(`${this.OnGoingProject_Health_MedicalProjectsurl}/getAlleventinfoData`)
   }
-  addOnGoingProject_Health_MedicalProjects(formdata: any) {
+  // addOnGoingProject_Health_MedicalProjects(formdata: any) {
     
-    return this.http.post(`https://snf.backend.socialforumindia.com/upcomingeventsRoute/addInfoByCategory`, formdata);
-  }
-  updateOnGoingProject_Health_MedicalProjects(id: number, formData: FormData) {
-    return this.http.put(`${this.OnGoingProject_Health_MedicalProjectsurl}/eventInfo/${id}`, formData);
+  //   return this.http.post(`https://snf.backend.socialforumindia.com/upcomingeventsRoute/addInfoByCategory`, formdata);
+  // }
+  addOnGoingProject_Health_MedicalProjects(projectData: any) {
+    return this.http.post('https://snf.backend.socialforumindia.com/upcomingeventsRoute/addInfoByCategory', projectData);
+}
+
+  updateOnGoingProject_Health_MedicalProjects(id: number, projectData: any) {
+    return this.http.put(`${this.OnGoingProject_Health_MedicalProjectsurl}/eventInfo/${id}`, projectData);
   }
   deleteOnGoingProject_Health_MedicalProjects(id: number) {
     return this.http.delete(`${this.OnGoingProject_Health_MedicalProjectsurl}/deleteeventinfo/${id}`)
@@ -378,7 +400,7 @@ deleteWell_wishers(id: number): Observable<string> {
     return this.http.delete(url, { responseType: 'text' });
   }
   //  Media/Awards -->  snf_in_news_papers
-  private snf_in_news_papersurl = 'https://snf.backend.socialforumindia.com/homemedia';
+  private snf_in_news_papersurl = 'https://snf.backend.socialforumindia.com/snf_in_news_papers';
   getsnf_in_news_papers() {
     return this.http.get(`${this.snf_in_news_papersurl}/get`)
   }

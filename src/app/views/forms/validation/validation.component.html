@@ -15,6 +15,13 @@
                 </div>
               </div>
               <div class="mb-3">
+                <label for="statePosition" class="form-label">Position:</label>
+                <input type="text" id="statePosition" class="form-control" formControlName="position" placeholder="position" />
+                <div *ngIf="StateForm.get('position')?.touched && StateForm.get('position')?.invalid" class="text-danger">
+                  Position is required.
+                </div>
+              </div>
+              <div class="mb-3">
                 <label for="StateImage" class="form-label">Image:</label>
                 <input type="file" id="StateImage" class="form-control" (change)="onFileChange($event)" />
                 <div *ngIf="StateForm.get('imageUrl')?.touched && StateForm.get('imageUrl')?.invalid" class="text-danger">
@@ -44,6 +51,13 @@
                 <input type="text" id="stateName" class="form-control" formControlName="name" />
                 <div *ngIf="StateForm.get('name')?.touched && StateForm.get('name')?.invalid" class="text-danger">
                   Name is required.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="statePosition" class="form-label">Position:</label>
+                <input type="text" id="statePosition" class="form-control" formControlName="position" placeholder="position" />
+                <div *ngIf="StateForm.get('position')?.touched && StateForm.get('position')?.invalid" class="text-danger">
+                  Position is required.
                 </div>
               </div>
               <div class="mb-3">
@@ -90,6 +104,9 @@
       <tr>
         <th>Sr. No</th>
         <th> Supporters & Well Wishers  Name</th>
+        <th> Position</th>
+
+
         <th>Image</th>
         <th class="text-right">Action</th>
       </tr>
@@ -98,6 +115,8 @@
       <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
         <td>{{ i + 1 + pageIndex * pageSize }}</td>
         <td class="text-right">{{ item.name }}</td>
+        <td class="text-right">{{ item.position }}</td>
+
         <td>
           <img [src]="item.imageUrl" alt="image" style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
         </td>
@@ -111,4 +130,4 @@
   
   <mat-paginator [length]="filteredCarrosalData.length" [pageSize]="pageSize"  (page)="onPageChange($event)">
   </mat-paginator>
-</div>
+  </div>

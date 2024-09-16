@@ -2,12 +2,45 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ServiceService } from 'src/app/Service/service.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-project-category',
   templateUrl: './projectcategory.component.html',
 })
 export class ProjectComponent implements OnInit {
+
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    minHeight: '25rem',
+    maxHeight: '20rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    sanitize: false,
+    toolbarPosition: 'top',
+    defaultFontName: 'Arial',
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+      
+    ],
+    // Toolbar configuration including image button
+ 
+    // Additional configuration for image uploading if required
+ 
+  };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   filteredCarrosalData: any[] = [];
   searchQuery: string = '';

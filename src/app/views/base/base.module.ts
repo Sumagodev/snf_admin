@@ -32,7 +32,7 @@ import { IconModule } from '@coreui/icons-angular';
 
 // utils
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
-
+// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 // views
 import { AccordionsComponent } from './accordion/accordions.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
@@ -56,8 +56,9 @@ import { BaseRoutingModule } from './base-routing.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+// import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
 @NgModule({
   imports: [
     CommonModule,
@@ -88,10 +89,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     PopoverModule,
     TableModule,
     DocsComponentsModule,
+    
     FormsModule,
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
+    AngularEditorModule
+
+   
    
     
   ],

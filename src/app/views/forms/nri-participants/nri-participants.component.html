@@ -14,6 +14,13 @@
                                   </div>
                             </div>
                             <div class="mb-3">
+                                <label for="nriPosition" class="form-label">Position:</label>
+                                <input type="text" id="nriPosition" class="form-control" formControlName="position" placeholder="position" />
+                                <div *ngIf="NriForm.get('position')?.touched && NriForm.get('position')?.invalid" class="text-danger">
+                                    position is required.
+                                  </div>
+                            </div>
+                            <div class="mb-3">
                                 <label for="nriImage" class="form-label">Image:</label>
                                 <input type="file" id="founderImage" class="form-control"
                                     (change)="onFileChange($event)" />
@@ -56,6 +63,8 @@
             <tr>
                 <th>Sr. No</th>
                 <th class="text-right">Nri Participants Title</th>
+                <th class="text-right">Position</th>
+
                 <th>Image</th>
                 <th class="text-right">Action</th>
             </tr>
@@ -65,6 +74,8 @@
   <tr *ngFor="let item of filteredCarrosalData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize); let i = index">
     <td>{{ i + 1 + pageIndex * pageSize }}</td>
                 <td class="text-right">{{ item.name }}</td>
+                <td class="text-right">{{ item.position }}</td>
+
                 <td>
                     <img [src]="item.imageUrl" alt="image"
                         style="height: 150px; width: 200px; float: left; margin-right: 10px;" />
@@ -95,7 +106,13 @@
                                 <div *ngIf="NriForm.get('name')?.touched && NriForm.get('name')?.invalid" class="text-danger">
                                     Name is required.
                                   </div>
-                                
+                                  <div class="mb-3">
+                                    <label for="nriPosition" class="form-label">Position:</label>
+                                    <input type="text" id="nriPosition" class="form-control" formControlName="position" placeholder="position" />
+                                    <div *ngIf="NriForm.get('position')?.touched && NriForm.get('position')?.invalid" class="text-danger">
+                                        position is required.
+                                      </div>
+                                </div>
                                   <div class="mb-3">
                                     <label for="currentImage" class="form-label">Current Image:</label><br />
                                     <img [src]="selectedItem.imageUrl" alt="current image" class="img-fluid mb-2" style="max-height: 150px; max-width: 200px;" />

@@ -23,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+         
             "outputPath": "dist/coreui-free-angular-admin-template",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -42,9 +43,12 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
              "src/scss/styles.scss"
+            
+             
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
+             
             ],
             "allowedCommonJsDependencies": [
               "chart.js"
@@ -55,7 +59,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "6000kb",  
+                  "maximumWarning": "8000kb",  
                   "maximumError": "7000kb"     
                 },
                 {
@@ -110,6 +114,7 @@
             ],
             "styles": [
               "src/scss/styles.scss"
+              
             ],
             "scripts": []
           }
