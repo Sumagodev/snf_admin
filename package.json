@@ -1,9 +1,9 @@
 {
-  "name": "",
+  "name": "snf_admin_my",
   "version": "4.7.15",
   "copyright": "Copyright 2024 creativeLabs Łukasz Holeczek",
   "license": "MIT",
-  "author": "The CoreUI Team (https://github.com/orgs/coreui/people) and contributors",
+  "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "homepage": "https://coreui.io/angular",
   "config": {
     "coreui_library_short_version": "4.7",
@@ -75,5 +75,14 @@
   "engines": {
     "node": "^18.13.0 || ^20.9.0",
     "npm": ">= 9"
+  },
+  "description": "[![@coreui angular](https://img.shields.io/badge/@coreui%20-angular-lightgrey.svg?style=flat-square)](https://github.com/coreui/angular)\r [![npm-coreui-angular][npm-coreui-angular-badge]][npm-coreui-angular]\r [![NPM downloads][npm-coreui-angular-download]][npm-coreui-angular]  \r [![@coreui coreui](https://img.shields.io/badge/@coreui%20-coreui-lightgrey.svg?style=flat-square)](https://github.com/coreui/coreui)\r [![npm package][npm-coreui-badge]][npm-coreui]\r [![NPM downloads][npm-coreui-download]][npm-coreui]  \r ![angular](https://img.shields.io/badge/angular-^17.2.0-lightgrey.svg?style=flat-square&logo=angular)",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohinikadam22/SNF_admin_my.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mohinikadam22/SNF_admin_my/issues"
   }
 }
